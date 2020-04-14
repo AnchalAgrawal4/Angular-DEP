@@ -1,0 +1,10 @@
+.formclass{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.formrow{
+    display: flex;
+    flex-direction: column;
+}

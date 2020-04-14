@@ -1,0 +1,14 @@
+.nav-bar{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    font-family: calibri;
+    font-size: large;
+}
+
+.nav-bar div{
+    margin-right: 1vw;
+}

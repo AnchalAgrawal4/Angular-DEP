@@ -1,0 +1,30 @@
+<div
+  class="card mt-2"
+  [class.active]="!user.isDeleted"
+  [class.deleted]="user.isDeleted"
+>
+  <div class="card-body">
+    <h5 class="card-title">{{ user.firstName }}</h5>
+    <ng-container
+      *ngIf="!showDetails; then userActions; else userDetails"
+    ></ng-container>
+  </div>
+</div>
+<ng-template #userActions>
+  <button
+    (click)="onUserStatusChange()"
+    class="btn"
+    [class.btn-success]="user.isDeleted"
+    [class.btn-danger]="!user.isDeleted"
+  >
+    {{ user.isDeleted ? "Activate" : "Deactivate" }}
+  </button>
+</ng-template>
+<ng-template #userDetails>
+  <button class="btn btn-primary mr-2" (click)="onUserShowDetails()">
+    Details
+  </button>
+  <button class="btn btn-warning" (click)="onUserEditDetails()"> 
+    Edit
+  </button>
+</ng-template>

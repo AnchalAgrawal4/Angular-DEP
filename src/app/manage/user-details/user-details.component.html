@@ -1,0 +1,12 @@
+<div [class.active]="!user.isDeleted" [class.deleted]="user.isDeleted">
+  <h3>{{ user | userName }}</h3>
+  <div>
+    <p>
+      {{ !user.isDeleted ? "Active" : "Deleted" }}
+    </p>
+  </div>
+  <div>Login Id: {{ user?.id }}</div>
+  <div>First Name: {{ user?.firstName }}</div>
+  <div>Last Name: {{ user?.lastName }}</div>
+  <div>Age: {{ user?.age }}</div>
+</div>
