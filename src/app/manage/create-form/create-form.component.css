@@ -1,9 +1,9 @@
-.formclass {
+.form-class {
   display: flex;
   flex-direction: column;
 }
 
-.formrow {
+.form-row {
   display: flex;
   flex-direction: column;
 }

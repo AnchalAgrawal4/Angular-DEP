@@ -1,10 +1,9 @@
-.formclass{
-    display: flex;
-    flex-direction: column;
-
+.form-class {
+  display: flex;
+  flex-direction: column;
 }
 
-.formrow{
-    display: flex;
-    flex-direction: column;
+.form-row {
+  display: flex;
+  flex-direction: column;
 }

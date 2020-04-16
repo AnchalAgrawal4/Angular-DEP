@@ -1,24 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { UserService } from 'src/app/user.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserService, User } from 'src/app/user.service';
 import { ActivatedRoute } from '@angular/router';
+import {
+  UserActionService,
+  UserActionTypes,
+} from 'src/app/shared/user-actions.service';
 
+const passwordPattern = new RegExp('^[a-zA-Z0-9]{8,12}$');
 @Component({
   selector: 'app-edit-form',
   templateUrl: './edit-form.component.html',
   styleUrls: ['./edit-form.component.css'],
 })
 export class EditFormComponent implements OnInit {
-  currentUser;
-  userId;
+  currentUser: User;
+  userId: string;
   updateForm: FormGroup = new FormGroup({
-    password: new FormControl(''),
-    age: new FormControl(''),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.pattern(passwordPattern),
+    ]),
+    age: new FormControl('', [Validators.required, Validators.maxLength(2)]),
   });
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userActionService: UserActionService
   ) {}
 
   ngOnInit(): void {
@@ -34,13 +43,18 @@ export class EditFormComponent implements OnInit {
     });
   }
 
-  updateUser() {
+  updateUser(): void {
     this.userService
       .updateUser({
         id: this.currentUser.id,
         age: this.updateForm.value.age,
         password: this.updateForm.value.password,
       })
-      .subscribe((_) => {});
+      .subscribe((_) => {
+        this.userActionService.onUserAction({
+          action: UserActionTypes.EDIT_USER_SUCCESS,
+          value: '',
+        });
+      });
   }
 }

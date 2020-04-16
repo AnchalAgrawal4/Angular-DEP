@@ -9,27 +9,27 @@ import { UserActionService } from '../shared/user-actions.service';
 })
 export class DeletedComponent implements OnInit {
   userList: User[] = [];
+  isUserListEmpty: boolean;
   constructor(
     private userService: UserService,
     private userActionService: UserActionService
   ) {}
 
   ngOnInit(): void {
-    this.loadUsers();
-    this.userActionService.userAction$.subscribe(({
-      value
-    }) =>
+    this.loadDeletedUsers();
+    this.userActionService.userAction$.subscribe(({ value }) =>
       this.activateUser(value)
     );
   }
 
-  loadUsers() {
+  loadDeletedUsers(): void {
     this.userService.getDeletedUsers().subscribe((result) => {
       this.userList = result;
+      this.isUserListEmpty = this.userList.length === 0;
     });
   }
 
-  activateUser(id: string) {
-    this.userService.activateUser(id).subscribe((_) => this.loadUsers());
+  activateUser(id: string): void {
+    this.userService.activateUser(id).subscribe((_) => this.loadDeletedUsers());
   }
 }

@@ -13,7 +13,7 @@ export class UserComponent {
 
   constructor(private userActionService: UserActionService) {}
 
-  onUserStatusChange() {
+  onUserStatusChange(): void {
     const action = this.user.isDeleted
       ? UserActionTypes.ACTIVATE_USER
       : UserActionTypes.DEACTIVATE_USER;
@@ -23,14 +23,14 @@ export class UserComponent {
     });
   }
 
-  onUserShowDetails() {
+  onUserShowDetails(): void {
     this.userActionService.onUserAction({
       action: UserActionTypes.SHOW_DETAILS,
       value: this.user.id,
     });
   }
 
-  onUserEditDetails() {
+  onUserEditDetails(): void {
     this.userActionService.onUserAction({
       action: UserActionTypes.EDIT_USER,
       value: this.user.id,

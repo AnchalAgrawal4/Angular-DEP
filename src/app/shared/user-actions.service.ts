@@ -12,6 +12,8 @@ export enum UserActionTypes {
   EDIT_USER = 'edit-user',
   ACTIVATE_USER = 'activate-user',
   DEACTIVATE_USER = 'deactivate-user',
+  CREATE_USER_SUCCESS = 'create-user-success',
+  EDIT_USER_SUCCESS = 'edit-user-success',
 }
 
 @Injectable({

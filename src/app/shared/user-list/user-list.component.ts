@@ -10,5 +10,10 @@ export class UserListComponent {
   @Input() users: User[];
   @Input() showDetails: boolean;
 
-  constructor() {}
+  trackUsers(index: number, user: User): string {
+    if (!user) {
+      return null;
+    }
+    return user.id;
+  }
 }

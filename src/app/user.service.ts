@@ -29,30 +29,30 @@ export class UserService {
     );
   }
 
-  getUserById(id: string) {
+  getUserById(id: string): Observable<User> {
     return this.http.get<User>(`${USERS_URL}/${id}`);
   }
 
-  createUser(user: User) {
-    return this.http.post(USERS_URL, user);
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(USERS_URL, user);
   }
 
-  updateUser(user: Partial<User>) {
-    return this.http.put(`${USERS_URL}/${user.id}`, {
+  updateUser(user: Partial<User>): Observable<User> {
+    return this.http.put<User>(`${USERS_URL}/${user.id}`, {
       password: user.password,
       age: user.age,
       isDeleted: user.isDeleted,
     });
   }
 
-  activateUser(id: string) {
-    return this.http.put(`${USERS_URL}/${id}`, {
+  activateUser(id: string): Observable<User> {
+    return this.http.put<User>(`${USERS_URL}/${id}`, {
       isDeleted: false,
     });
   }
 
-  deActivateUser(id: string) {
-    return this.http.put(`${USERS_URL}/${id}`, {
+  deActivateUser(id: string): Observable<User> {
+    return this.http.put<User>(`${USERS_URL}/${id}`, {
       isDeleted: true,
     });
   }
@@ -66,5 +66,5 @@ export interface User {
   login: string;
   password: string;
   isDeleted?: boolean;
-  updatedAt?: Date;
+  updatedAt?: string;
 }

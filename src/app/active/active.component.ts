@@ -9,27 +9,30 @@ import { UserActionService } from '../shared/user-actions.service';
 })
 export class ActiveComponent implements OnInit {
   userList: User[] = [];
+  isUserListEmpty: boolean;
+
   constructor(
     private userService: UserService,
     private userActionService: UserActionService
   ) {}
 
   ngOnInit(): void {
-    this.loadUsers();
-    this.userActionService.userAction$.subscribe(({
-      value
-    }) =>
+    this.loadActiveUsers();
+    this.userActionService.userAction$.subscribe(({ value }) =>
       this.deActivateUser(value)
     );
   }
 
-  loadUsers() {
+  loadActiveUsers(): void {
     this.userService.getActiveUsers().subscribe((result) => {
       this.userList = result;
+      this.isUserListEmpty = this.userList.length === 0;
     });
   }
 
-  deActivateUser(id: string) {
-    this.userService.deActivateUser(id).subscribe((_) => this.loadUsers());
+  deActivateUser(id: string): void {
+    this.userService
+      .deActivateUser(id)
+      .subscribe((_) => this.loadActiveUsers());
   }
 }
