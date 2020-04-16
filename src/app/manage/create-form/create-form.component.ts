@@ -4,13 +4,15 @@ import {
   FormGroup,
   Validators,
   ValidatorFn,
-  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
-import { UserService } from 'src/app/user.service';
+import { UserService, User } from 'src/app/user.service';
 import {
   UserActionService,
   UserActionTypes,
 } from 'src/app/shared/user-actions.service';
+
+const passwordPattern = '^[a-zA-Z0-9]{8,12}$';
 
 @Component({
   selector: 'app-create-form',
@@ -18,7 +20,6 @@ import {
   styleUrls: ['./create-form.component.css'],
 })
 export class CreateFormComponent {
-  passwordPattern = '^[a-zA-Z0-9]$';
   createForm: FormGroup = new FormGroup(
     {
       firstName: new FormControl('', [
@@ -37,12 +38,15 @@ export class CreateFormComponent {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.passwordPattern),
+        Validators.pattern(passwordPattern),
       ]),
-      confirmPassword: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.pattern(passwordPattern),
+      ]),
       age: new FormControl('', [Validators.required, Validators.maxLength(2)]),
     },
-    { validators: this.confirmPasswordValidator }
+    { validators: confirmPasswordValidator('password', 'confirmPassword') }
   );
 
   constructor(
@@ -51,22 +55,24 @@ export class CreateFormComponent {
   ) {}
 
   createUser() {
-    if (this.createForm.invalid) {
-      return;
-    } else {
-      this.userService.createUser(this.createForm.value).subscribe((_) => {
-        this.userActionService.onUserAction({
-          action: UserActionTypes.CREATE_USER_SUCCESS,
-          value: '',
-        });
+    const { firstName, lastName, login, password, age } = this.createForm.value;
+    const payload: User = { firstName, lastName, login, password, age };
+    this.userService.createUser(payload).subscribe((_) => {
+      this.userActionService.onUserAction({
+        action: UserActionTypes.CREATE_USER_SUCCESS,
+        value: '',
       });
-    }
+    });
   }
+}
 
-  confirmPasswordValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      console.log(control);
-      return null;
-    };
-  }
+function confirmPasswordValidator(cName1: string, cName2: string): ValidatorFn {
+  return (group: FormGroup): ValidationErrors => {
+    const password = group.get(cName1).value;
+    const confirmPassword = group.get(cName2).value;
+    if (password !== confirmPassword) {
+      return { passwordMismatch: true };
+    }
+    return null;
+  };
 }
