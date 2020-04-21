@@ -1,0 +1,24 @@
+.active  {
+  border: 2px solid lightgreen;
+  border-radius: 2px;
+  padding: 5px;
+  margin-top: 5px;
+}
+.deleted {
+  border: 2px solid orangered;
+  padding: 5px;
+  margin-top: 5px;
+}
+div {
+  margin-bottom: 10px;
+}
+.deleted p{
+  color: orangered;
+  font-family: cursive;
+  font-size: small;
+}
+.active p{
+  color: lightgreen;
+  font-family: cursive;
+  font-size: small;
+}

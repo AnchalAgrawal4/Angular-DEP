@@ -1,0 +1,28 @@
+<form [formGroup]="createForm">
+  <div class="form-row">
+    <label>First Name:</label><input type="text" formControlName="firstName" />
+  </div>
+  <div class="form-row">
+    <label>Last Name: </label><input type="text" formControlName="lastName" />
+  </div>
+  <div class="form-row">
+    <label>Login: </label><input type="text" formControlName="login" />
+  </div>
+  <div class="form-row">
+    <label>Password: </label> <input type="text" formControlName="password" />
+  </div>
+  <div class="form-row">
+    <label>Confirm Password: </label>
+    <input type="text" formControlName="confirmPassword" />
+  </div>
+  <div class="form-row">
+    <label>Age: </label><input type="number" formControlName="age" />
+  </div>
+  <button
+    class="btn btn-primary"
+    (click)="createUser()"
+    [disabled]="!createForm.valid"
+  >
+    Submit
+  </button>
+</form>

@@ -1,0 +1,2 @@
+<div *ngIf="isUserListEmpty" class="text-center">No Records Found!</div>
+<app-user-list [users]="userList" *ngIf="!isUserListEmpty"></app-user-list>
